@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+</head>
+
+<body>
+<div th:include="navbar.html"></div>
+<table id="showTeacher" class="table table-striped table-bordered" style="width:100%">
+    <thead class="table-dark">
+    <tr>
+        <th>Id</th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Personnel number</th>
+        <th>Courses</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>
+            <p th:text="${teacher.getId()}">VALUE</p>
+        </td>
+        <td>
+            <p th:text="${teacher.getFirstName()}">VALUE</p>
+        </td>
+        <td>
+            <p th:text="${teacher.getLastName()}">VALUE</p>
+        </td>
+        <td>
+            <p th:text="${teacher.getPersonnelNumber()}">VALUE</p>
+        </td>
+        <td>
+            <span th:if="${teacher.courses.isEmpty == true}">NO COURSES YET</span>
+            <div th:if="${teacher.courses.isEmpty == false}">
+                <ul th:each="course : ${teacher.getCourses()}">
+                    <a th:href="@{/courses/{id}(id=${course.getId()})}" th:text="${course.getName()}"></a>
+                </ul>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div class="container text-center">
+    <a href="/teachers">
+        <i class="fa-solid fa-arrow-left-long"></i>
+    </a>
+    <a th:href="@{/teachers/{id}/edit(id=${teacher.getId()})}">
+        <i class="fa fa-pen"></i>
+    </a>
+    <a th:href="@{/schedules/teachers/{id}(id=${teacher.getId()})}">
+        <i class="fa fa-calendar-days"></i>
+    </a>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

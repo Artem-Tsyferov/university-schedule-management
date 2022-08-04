@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Courses</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+</head>
+
+<body>
+<div th:include="navbar.html"></div>
+<div class="container text-center">
+    <h4>Courses</h4>
+    <a href="/courses/new">
+        <h5>Create course</h5>
+    </a>
+</div>
+<table id="showCourses" class="table table-striped table-bordered" style="width:100%">
+    <thead class="table-dark">
+    <tr>
+        <th>Name</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="course, iStat : ${coursePage.content}">
+        <td>
+            <a th:href="@{/courses/{id}(id=${course.getId()})}" th:text="${course.name}"></a>
+        </td>
+        <td>
+            <a th:href="@{/courses/{id}/edit(id=${course.getId()})}">
+                <i class="fa fa-pen"></i>
+            </a>
+        </td>
+        <td>
+            <form th:method="DELETE" th:action="@{/courses/{id}(id=${course.getId()})}">
+                <button type='submit' value='delete' class="btn"><i class="fa fa-trash"></i></button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+    <tfoot class="table-dark">
+    <tr>
+        <th>Name</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    </tfoot>
+</table>
+
+<div th:if="${coursePage.totalPages > 0}" class="pagination d-inline-flex"
+     th:each="pageNumber : ${pageNumbers}" >
+    <a th:href="@{/courses(size=${coursePage.size}, page=${pageNumber})}"
+       th:text=${pageNumber}
+       th:class="${pageNumber==coursePage.number + 1} ? active"></a>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Update student</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/inputFormStyle.css">
+</head>
+
+<body>
+<div th:include="navbar.html"></div>
+<div id="divForm">
+    <form th:method="PATCH" th:action="@{/students/{id}(id=${student.getId()})}" th:object="${student}">
+        <p>
+            <label for="firstName">Enter first name:</label>
+            <input type="text" th:field="*{firstName}" id="firstName"/>
+        <div style="color:red" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First name error</div>
+        </p>
+        <br/>
+        <p>
+            <label for="lastName">Enter last name:</label>
+            <input type="text" th:field="*{lastName}" id="lastName"/>
+        <div style="color:red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last name error</div>
+        </p>
+        <br/>
+        <p>
+            <label for="personnelNumber">Enter personnel number:</label>
+            <input type="text" th:field="*{personnelNumber}" id="personnelNumber"/>
+        <div style="color:red" th:if="${#fields.hasErrors('personnelNumber')}" th:errors="*{personnelNumber}">Personnel
+            number error
+        </div>
+        </p>
+        <br/>
+        <p>
+            <label for="groupId">Choose group:</label>
+            <select id="groupId" name="groups" th:object="${student}" th:field="*{group.id}">
+                <option th:each="group : ${groups}" th:value="${group.getId()}" th:text="${group.getName()}">
+                </option>
+            </select>
+        </p>
+        <br/>
+        <input type="submit" value="Update">
+    </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

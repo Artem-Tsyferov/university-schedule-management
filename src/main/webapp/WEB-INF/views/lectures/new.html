@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>New Lecture</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/inputFormStyle.css">
+</head>
+
+<body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+<div th:include="navbar.html"></div>
+<div id="divForm">
+    <form th:method="POST" th:action="@{/lectures}" th:object="${lectureDTO}">
+        <p>
+            <label for="courseId">Choose course:</label>
+            <select id="courseId" name="courses" th:object="${lectureDTO}" th:field="*{courseId}">
+                <option th:each="course : ${courses}" th:value="${course.getId()}" th:text="${course.getName()}">
+                </option>
+            </select>
+        </p>
+        <br/>
+        <p>
+            <label for="groupId">Choose group:</label>
+            <select id="groupId" name="groups" th:object="${lectureDTO}" th:field="*{groupId}">
+                <option th:each="group : ${groups}" th:value="${group.getId()}" th:text="${group.getName()}">
+                </option>
+            </select>
+        </p>
+        <br/>
+        <p>
+            <label for="teacherId">Choose Teacher:</label>
+            <select id="teacherId" name="teachers" th:object="${lectureDTO}" th:field="*{teacherId}">
+                <option th:each="teacher : ${teachers}" th:value="${teacher.getId()}"
+                        th:text="${teacher.getFullName()}">
+                </option>
+            </select>
+        </p>
+        <br/>
+        <p>
+            <label for="roomNumber">Enter Room's number:</label>
+            <input type="text" th:field="*{roomNumber}" id="roomNumber"/>
+        <div style="color:red" th:if="${#fields.hasErrors('roomNumber')}" th:errors="*{roomNumber}">Room number error
+        </div>
+        </p>
+        <br/>
+        <p>Choose date <input type="date" th:field="*{date}" name="calendar"></p>
+        <div style="color:red" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Date error</div>
+        <br/>
+        <p>Select time of start: <input type="time" th:field="*{timeOfStart}" name="StartTime"></p>
+        <div style="color:red" th:if="${#fields.hasErrors('timeOfStart')}" th:errors="*{timeOfStart}">TimeOfStart
+            error
+        </div>
+        <br/>
+        <p>Select time of end: <input type="time" th:field="*{timeOfEnd}" name="EndTime"></p>
+        <div style="color:red" th:if="${#fields.hasErrors('timeOfEnd')}" th:errors="*{timeOfEnd}">TimeOfEnd error</div>
+        <br/>
+        <input type="submit" value="Create">
+    </form>
+</div>
+</body>
+
+</html>

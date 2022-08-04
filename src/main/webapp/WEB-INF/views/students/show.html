@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Student</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+</head>
+
+<body>
+<div th:include="navbar.html"></div>
+<table id="showStudent" class="table table-striped table-bordered" style="width:100%">
+    <thead class="table-dark">
+    <tr>
+        <th>Id</th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Personnel id</th>
+        <th>Group</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>
+            <p th:text="${student.getId()}">VALUE</p>
+        </td>
+        <td>
+            <p th:text="${student.getFirstName()}">VALUE</p>
+        </td>
+        <td>
+            <p th:text="${student.getLastName()}">VALUE</p>
+        </td>
+        <td>
+            <p th:text="${student.getPersonnelNumber()}">VALUE</p>
+        </td>
+        <td>
+            <span th:if="${student.group == null}">NO GROUP YET</span>
+            <div th:if="${student.group != null}">
+            <p th:text="${student.group.getName()}">VALUE</p>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div class="container text-center">
+    <a href="/students">
+        <i class="fa-solid fa-arrow-left-long"></i>
+    </a>
+    <a th:href="@{/students/{id}/edit(id=${student.getId()})}">
+        <i class="fa fa-pen"></i>
+    </a>
+    <a th:href="@{/schedules/students/{id}(id=${student.getId()})}">
+        <i class="fa fa-calendar-days"></i>
+    </a>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+</body>
+
+</html>

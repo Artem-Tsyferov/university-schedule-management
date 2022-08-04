@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lecture</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+</head>
+
+<body>
+<div th:include="navbar.html"></div>
+<div class="container text-center">
+    <a href="/lectures/new">
+        <h5>New lecture</h5>
+    </a>
+</div>
+<table id="showLecture" class="table table-striped table-bordered" style="width:100%">
+    <thead class="table-dark">
+    <tr>
+        <th>Date</th>
+        <th>Time of start</th>
+        <th>Time of end</th>
+        <th>Course</th>
+        <th>Group</th>
+        <th>Teacher</th>
+        <th>Room Number</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="schedule : ${schedules}">
+        <td>
+            <p th:text="${schedule.getDate()}">VALUE</p>
+        </td>
+        <td>
+            <div>
+                <ul th:each="lecture : ${schedule.getLectures()}">
+                    <p th:text="${lecture.getTimeOfStart()}">VALUE</p>
+                </ul>
+            </div>
+        </td>
+        <td>
+            <div>
+                <ul th:each="lecture : ${schedule.getLectures()}">
+                    <p th:text="${lecture.getTimeOfEnd()}">VALUE</p>
+                </ul>
+            </div>
+        </td>
+        <td>
+            <div>
+                <ul th:each="lecture : ${schedule.getLectures()}">
+                    <span th:if="${lecture.course == null}">NO COURSE YET</span>
+                </ul>
+                <ul th:each="lecture : ${schedule.getLectures()}">
+                    <p th:if="${lecture.course != null}"
+                       th:text="${lecture.getCourse().getName()}">
+                        VALUE</p>
+                </ul>
+            </div>
+        </td>
+        <td>
+            <div>
+                <ul th:each="lecture : ${schedule.getLectures()}">
+                    <span th:if="${lecture.group == null}">NO GROUP YET</span>
+                </ul>
+                <ul th:each="lecture : ${schedule.getLectures()}">
+                    <p th:if="${lecture.group != null}"
+                       th:text="${lecture.getGroup().getName()}">
+                        VALUE</p>
+                </ul>
+            </div>
+        </td>
+        <td>
+            <div>
+                <ul th:each="lecture : ${schedule.getLectures()}">
+                    <span th:if="${lecture.teacher == null}">NO TEACHER YET</span>
+                </ul>
+                <ul th:each="lecture : ${schedule.getLectures()}">
+                    <p th:if="${lecture.teacher != null}"
+                       th:text="${lecture.getTeacher().getFirstName() + ' ' + lecture.getTeacher().getLastName()}">
+                        VALUE</p>
+                </ul>
+            </div>
+        </td>
+        <td>
+            <div>
+                <ul th:each="lecture : ${schedule.getLectures()}">
+                    <p th:text="${lecture.getRoomNumber()}">VALUE</p>
+                </ul>
+            </div>
+        </td>
+        <td>
+            <ul th:each="lecture : ${schedule.getLectures()}">
+                <a th:href="@{/lectures/{id}/edit(id=${lecture.getId()})}">
+                    <i class="fa fa-pen"></i>
+                </a>
+            </ul>
+        </td>
+        <td>
+            <form th:each="lecture : ${schedule.getLectures()}" th:method="DELETE"
+                  th:action="@{/lectures/{id}(id=${lecture.getId()})}">
+                <button type='submit' value='delete' class="btn"><i class="fa fa-trash"></i></button>
+            </form>
+        </td>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+                crossorigin="anonymous"></script>
+</table>
+</body>
+</html>
