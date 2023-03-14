@@ -1,1 +1,1 @@
-web application for organizing scedules for groups, teachers and students
+web application for organizing schedules for groups, teachers and students
